@@ -59,6 +59,12 @@ const App = () => {
     dateEvents.splice(index, 1);
     setEvents({ ...events, [selectedDate]: [...dateEvents] });
   };
+  const handleUpdateEvent = (date, updatedEvents) => {
+    setEvents((prevEvents) => ({
+      ...prevEvents,
+      [date]: updatedEvents,
+    }));
+  };
 
   const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
   const totalDays = daysInMonth(currentDate.getMonth(), currentDate.getFullYear());
@@ -89,7 +95,12 @@ const App = () => {
           handleEventSubmit={handleEventSubmit}
         />
       </div>
-      <EventList selectedDate={selectedDate} events={events} onDelete={handleEventDelete} />
+      <EventList
+        selectedDate={selectedDate}
+        events={events}
+        onDelete={handleEventDelete}
+        onUpdate={handleUpdateEvent}
+      />
     </div>
   );
 };
