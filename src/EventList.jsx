@@ -11,6 +11,7 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
     startTime: "",
     endTime: "",
     description: "",
+    category: "other",
   });
   const [filterKeyword, setFilterKeyword] = useState("");
 
@@ -33,11 +34,25 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
       event.name.toLowerCase().includes(filterKeyword.toLowerCase())
     ) || [];
 
-  return (
-    <div className="w-1/4 p-4 bg-gray-200">
-      <h3 className="text-lg font-bold mb-4">Events on {selectedDate || "Select a day"}</h3>
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case "work":
+        return "bg-blue-200";
+      case "personal":
+        return "bg-green-200";
+      case "other":
+        return "bg-gray-200";
+      default:
+        return "bg-gray-200";
+    }
+  };
 
-      {/* Search Input */}
+  return (
+    <div className="w-1/4 p-4 ">
+      <h3 className="text-lg font-bold mb-4">
+        Events on {selectedDate || "Select a day"}
+      </h3>
+
       {selectedDate && (
         <Input
           type="text"
@@ -51,7 +66,10 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
       {selectedDate && (
         <ul className="space-y-2">
           {filteredEvents.map((event, index) => (
-            <li key={index} className="border p-4 rounded bg-white">
+            <li
+              key={index}
+              className={`border p-4 rounded ${getCategoryColor(event.category)}`}
+            >
               <strong>{event.name}</strong>: {event.startTime} - {event.endTime}
               <p className="pt-2 pb-4">{event.description}</p>
               <div className="flex space-x-2">
@@ -76,7 +94,6 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
         </ul>
       )}
 
-      {/* Edit Form */}
       {isEditing && (
         <div className="mt-4 p-4 bg-white border rounded">
           <h4 className="text-lg font-bold mb-2">Edit Event</h4>
@@ -85,27 +102,35 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
             placeholder="Event Name"
             className="w-full mb-2"
             value={editDetails.name}
-            onChange={(e) => setEditDetails({ ...editDetails, name: e.target.value })}
+            onChange={(e) =>
+              setEditDetails({ ...editDetails, name: e.target.value })
+            }
           />
           <div className="flex space-x-2 mb-2">
             <Input
               type="time"
               className="w-1/2"
               value={editDetails.startTime}
-              onChange={(e) => setEditDetails({ ...editDetails, startTime: e.target.value })}
+              onChange={(e) =>
+                setEditDetails({ ...editDetails, startTime: e.target.value })
+              }
             />
             <Input
               type="time"
               className="w-1/2"
               value={editDetails.endTime}
-              onChange={(e) => setEditDetails({ ...editDetails, endTime: e.target.value })}
+              onChange={(e) =>
+                setEditDetails({ ...editDetails, endTime: e.target.value })
+              }
             />
           </div>
           <Textarea
             placeholder="Description"
             className="w-full mb-2"
             value={editDetails.description}
-            onChange={(e) => setEditDetails({ ...editDetails, description: e.target.value })}
+            onChange={(e) =>
+              setEditDetails({ ...editDetails, description: e.target.value })
+            }
           />
           <div className="flex space-x-2">
             <Button
@@ -128,3 +153,4 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
 };
 
 export default EventList;
+
