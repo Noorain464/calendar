@@ -69,9 +69,6 @@ components.json
 # ESLint and Prettier files
 .eslintcache
 .prettiercache
-eslint.config.js
-vite.config.js
-tailwind.config.js
 
 # React-specific files
 *.module.css.d.ts
