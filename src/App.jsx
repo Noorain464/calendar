@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import CalendarGrid from "./CalendarGrid";
 import CalendarHeader from "./CalendarHeader";
-import EventModal from "./EventModal";
+import CalendarGrid from "./CalendarGrid";
+import EventList from "./EventList";
+
 const App = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
   const [events, setEvents] = useState(JSON.parse(localStorage.getItem("events")) || {});
-  const [showEventModal, setShowEventModal] = useState(false);
   const [eventDetails, setEventDetails] = useState({ name: "", startTime: "", endTime: "", description: "" });
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const App = () => {
   const handleDayClick = (day) => {
     const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     setSelectedDate(date.toDateString());
-    setShowEventModal(true);
   };
 
   const handleEventSubmit = (e) => {
@@ -51,7 +50,6 @@ const App = () => {
     });
 
     setEventDetails({ name: "", startTime: "", endTime: "", description: "" });
-    setShowEventModal(false);
   };
 
   const handleEventDelete = (index) => {
@@ -67,30 +65,61 @@ const App = () => {
   const blankDays = Array.from({ length: firstDayOfMonth }, (_, i) => "");
 
   return (
-    <div className="w-500 bg-gray-100">
-      <CalendarHeader
-        currentDate={currentDate}
-        onPrevious={handlePreviousMonth}
-        onNext={handleNextMonth}
-      />
-      <CalendarGrid
-        days={daysArray}
-        blankDays={blankDays}
-        currentDate={currentDate}
-        selectedDate={selectedDate}
-        onDayClick={handleDayClick}
-      />
-      {showEventModal && (
-        <EventModal
-          selectedDate={selectedDate}
-          events={events}
-          eventDetails={eventDetails}
-          setEventDetails={setEventDetails}
-          onSubmit={handleEventSubmit}
-          onClose={() => setShowEventModal(false)}
-          onDelete={handleEventDelete}
+    <div className="min-h-screen bg-gray-100 flex">
+      <div className="w-3/4">
+        <CalendarHeader
+          currentDate={currentDate}
+          onPrevious={handlePreviousMonth}
+          onNext={handleNextMonth}
         />
-      )}
+        <CalendarGrid
+          days={daysArray}
+          blankDays={blankDays}
+          currentDate={currentDate}
+          selectedDate={selectedDate}
+          onDayClick={handleDayClick}
+        />
+        <div className="p-4">
+          {selectedDate && (
+            <form onSubmit={handleEventSubmit} className="space-y-4 bg-white p-4 rounded shadow-md">
+              <input
+                type="text"
+                className="w-full p-2 border rounded"
+                placeholder="Event Name"
+                value={eventDetails.name}
+                onChange={(e) => setEventDetails({ ...eventDetails, name: e.target.value })}
+                required
+              />
+              <div className="flex space-x-4">
+                <input
+                  type="time"
+                  className="w-1/2 p-2 border rounded"
+                  value={eventDetails.startTime}
+                  onChange={(e) => setEventDetails({ ...eventDetails, startTime: e.target.value })}
+                  required
+                />
+                <input
+                  type="time"
+                  className="w-1/2 p-2 border rounded"
+                  value={eventDetails.endTime}
+                  onChange={(e) => setEventDetails({ ...eventDetails, endTime: e.target.value })}
+                  required
+                />
+              </div>
+              <textarea
+                className="w-full p-2 border rounded"
+                placeholder="Description (optional)"
+                value={eventDetails.description}
+                onChange={(e) => setEventDetails({ ...eventDetails, description: e.target.value })}
+              ></textarea>
+              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+                Add Event
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+      <EventList selectedDate={selectedDate} events={events} onDelete={handleEventDelete} />
     </div>
   );
 };
