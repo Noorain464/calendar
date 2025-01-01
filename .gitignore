@@ -62,7 +62,6 @@ ehthumbs.db
 .vite/
 
 # Shadcn components generated files
-components.json
 
 # ESLint and Prettier files
 .eslintcache
