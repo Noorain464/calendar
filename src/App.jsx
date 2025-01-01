@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CalendarHeader from "./CalendarHeader";
 import CalendarGrid from "./CalendarGrid";
 import EventList from "./EventList";
-
+import EventModal from "./EventModal";
 const App = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -31,26 +31,28 @@ const App = () => {
   const handleEventSubmit = (e) => {
     e.preventDefault();
     if (!selectedDate) return;
-
+  
     const dateEvents = events[selectedDate] || [];
-
+    console.log("Before adding event:", eventDetails);
+  
     const hasOverlap = dateEvents.some(
       (event) =>
         event.startTime < eventDetails.endTime && eventDetails.startTime < event.endTime
     );
-
+  
     if (hasOverlap) {
       alert("Event times overlap. Please choose a different time.");
       return;
     }
-
+  
     setEvents({
       ...events,
       [selectedDate]: [...dateEvents, eventDetails],
     });
-
+  
     setEventDetails({ name: "", startTime: "", endTime: "", description: "" });
   };
+  
 
   const handleEventDelete = (index) => {
     const dateEvents = events[selectedDate];
@@ -79,45 +81,13 @@ const App = () => {
           selectedDate={selectedDate}
           onDayClick={handleDayClick}
         />
-        <div className="p-4">
-          {selectedDate && (
-            <form onSubmit={handleEventSubmit} className="space-y-4 bg-white p-4 rounded shadow-md">
-              <input
-                type="text"
-                className="w-full p-2 border rounded"
-                placeholder="Event Name"
-                value={eventDetails.name}
-                onChange={(e) => setEventDetails({ ...eventDetails, name: e.target.value })}
-                required
-              />
-              <div className="flex space-x-4">
-                <input
-                  type="time"
-                  className="w-1/2 p-2 border rounded"
-                  value={eventDetails.startTime}
-                  onChange={(e) => setEventDetails({ ...eventDetails, startTime: e.target.value })}
-                  required
-                />
-                <input
-                  type="time"
-                  className="w-1/2 p-2 border rounded"
-                  value={eventDetails.endTime}
-                  onChange={(e) => setEventDetails({ ...eventDetails, endTime: e.target.value })}
-                  required
-                />
-              </div>
-              <textarea
-                className="w-full p-2 border rounded"
-                placeholder="Description (optional)"
-                value={eventDetails.description}
-                onChange={(e) => setEventDetails({ ...eventDetails, description: e.target.value })}
-              ></textarea>
-              <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-                Add Event
-              </button>
-            </form>
-          )}
-        </div>
+        <EventModal
+          selectedDate={selectedDate}
+          events={events}
+          eventDetails={eventDetails}
+          setEventDetails={setEventDetails}
+          handleEventSubmit={handleEventSubmit}
+        />
       </div>
       <EventList selectedDate={selectedDate} events={events} onDelete={handleEventDelete} />
     </div>

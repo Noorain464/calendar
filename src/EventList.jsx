@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "./components/ui/button";
 
+
 const EventList = ({ selectedDate, events, onDelete }) => {
   return (
     <div className="w-1/4 p-4 bg-gray-200">

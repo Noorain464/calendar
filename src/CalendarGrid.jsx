@@ -24,7 +24,7 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
         return (
           <div
             key={index}
-            className={`p-4 text-center border rounded cursor-pointer ${
+            className={`p-8 text-center border rounded cursor-pointer ${
               isToday ? "bg-blue-100" : ""
             } ${
               isSelected ? "bg-blue-300" : "hover:bg-gray-100"
