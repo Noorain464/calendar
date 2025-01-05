@@ -6,11 +6,11 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
   const today = new Date();
 
   return (
-    <div className="grid grid-cols-7 gap-2 p-4 bg-white shadow-md rounded-lg sm:grid-cols-3 xs:grid-cols-1 sm:p-6 xs:p-4">
+    <div className="grid grid-cols-7 gap-2 p-4 bg-white shadow-md rounded-lg">
       {daysOfWeek.map((day) => (
         <div
           key={day}
-          className="text-center font-medium text-gray-800 uppercase bg-gray-100 py-2 rounded sm:py-4"
+          className="text-center font-medium text-gray-800 uppercase bg-gray-100 py-2 rounded"
         >
           {day}
         </div>
@@ -35,7 +35,7 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
                 : isWeekend
                 ? "bg-red-100 text-red-700"
                 : "hover:bg-gray-100"
-            } sm:p-6 xs:p-4`
+            }`
           : "bg-gray-50";
 
         return (
@@ -53,4 +53,3 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
 };
 
 export default CalendarGrid;
-

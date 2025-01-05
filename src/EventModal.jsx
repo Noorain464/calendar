@@ -10,15 +10,15 @@ const EventModal = ({
   handleEventSubmit,
 }) => {
   return (
-    <div className="p-4 md:p-6">
+    <div className="p-4">
       {selectedDate && (
         <form
           onSubmit={handleEventSubmit}
-          className="space-y-4 bg-white p-4 rounded shadow-md max-w-lg mx-auto"
+          className="space-y-4 bg-white p-4 rounded shadow-md"
         >
           <Input
             type="text"
-            className="w-full p-2 border rounded block"
+            className="w-full p-2 border rounded"
             placeholder="Event Name"
             value={eventDetails.name}
             onChange={(e) =>
@@ -26,10 +26,10 @@ const EventModal = ({
             }
             required
           />
-          <div className="flex flex-col space-y-4">
+          <div className="flex space-x-4">
             <Input
               type="time"
-              className="w-full p-2 border rounded block"
+              className="w-1/2 p-2 border rounded"
               value={eventDetails.startTime}
               onChange={(e) =>
                 setEventDetails({ ...eventDetails, startTime: e.target.value })
@@ -38,7 +38,7 @@ const EventModal = ({
             />
             <Input
               type="time"
-              className="w-full p-2 border rounded block"
+              className="w-1/2 p-2 border rounded"
               value={eventDetails.endTime}
               onChange={(e) =>
                 setEventDetails({ ...eventDetails, endTime: e.target.value })
@@ -47,19 +47,20 @@ const EventModal = ({
             />
           </div>
           <Textarea
-            className="w-full p-2 border rounded block"
+            className="w-full p-2 border rounded"
             placeholder="Description (optional)"
             value={eventDetails.description}
             onChange={(e) =>
               setEventDetails({ ...eventDetails, description: e.target.value })
             }
           ></Textarea>
+          {/* Add category selection dropdown */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">
               Event Category
             </label>
             <select
-              className="w-full p-2 border rounded block"
+              className="w-full p-2 border rounded"
               value={eventDetails.category || "other"}
               onChange={(e) =>
                 setEventDetails({ ...eventDetails, category: e.target.value })
@@ -71,10 +72,7 @@ const EventModal = ({
               <option value="other">Other</option>
             </select>
           </div>
-          <Button
-            type="submit"
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded block"
-          >
+          <Button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
             Add Event
           </Button>
         </form>
@@ -84,4 +82,3 @@ const EventModal = ({
 };
 
 export default EventModal;
-

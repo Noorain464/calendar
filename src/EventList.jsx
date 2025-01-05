@@ -48,8 +48,8 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
   };
 
   return (
-    <div className="flex flex-col w-full md:w-1/4 p-4 md:p-6">
-      <h3 className="text-lg font-bold mb-4 md:mb-6">
+    <div className="w-1/4 p-4 ">
+      <h3 className="text-lg font-bold mb-4">
         Events on {selectedDate || "Select a day"}
       </h3>
 
@@ -57,24 +57,22 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
         <Input
           type="text"
           placeholder="Filter events by keyword"
-          className="mb-4 md:mb-6 w-full"
+          className="mb-4 w-full"
           value={filterKeyword}
           onChange={(e) => setFilterKeyword(e.target.value)}
         />
       )}
 
       {selectedDate && (
-        <ul className="space-y-2 md:space-y-4">
+        <ul className="space-y-2">
           {filteredEvents.map((event, index) => (
             <li
               key={index}
-              className={`border md:border-2 p-4 md:p-6 rounded ${getCategoryColor(
-                event.category
-              )}`}
+              className={`border p-4 rounded ${getCategoryColor(event.category)}`}
             >
               <strong>{event.name}</strong>: {event.startTime} - {event.endTime}
-              <p className="pt-2 pb-4 md:pt-4 md:pb-6">{event.description}</p>
-              <div className="flex space-x-2 md:flex-row flex-col md:space-x-4 space-y-2 md:space-y-0">
+              <p className="pt-2 pb-4">{event.description}</p>
+              <div className="flex space-x-2">
                 <Button
                   className="mt-2 px-2 py-1 bg-red-500 text-white rounded"
                   onClick={() => onDelete(index)}
@@ -97,18 +95,18 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
       )}
 
       {isEditing && (
-        <div className="mt-4 p-4 md:p-6 bg-white border md:border-2 rounded">
-          <h4 className="text-lg font-bold mb-2 md:mb-4">Edit Event</h4>
+        <div className="mt-4 p-4 bg-white border rounded">
+          <h4 className="text-lg font-bold mb-2">Edit Event</h4>
           <Input
             type="text"
             placeholder="Event Name"
-            className="w-full mb-2 md:mb-4"
+            className="w-full mb-2"
             value={editDetails.name}
             onChange={(e) =>
               setEditDetails({ ...editDetails, name: e.target.value })
             }
           />
-          <div className="flex space-x-2 md:flex-row flex-col md:space-x-4 space-y-2 md:space-y-0 mb-2 md:mb-4">
+          <div className="flex space-x-2 mb-2">
             <Input
               type="time"
               className="w-1/2"
@@ -128,13 +126,13 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
           </div>
           <Textarea
             placeholder="Description"
-            className="w-full mb-2 md:mb-4"
+            className="w-full mb-2"
             value={editDetails.description}
             onChange={(e) =>
               setEditDetails({ ...editDetails, description: e.target.value })
             }
           />
-          <div className="flex space-x-2 md:flex-row flex-col md:space-x-4 space-y-2 md:space-y-0">
+          <div className="flex space-x-2">
             <Button
               className="px-4 py-2 bg-green-500 text-white rounded"
               onClick={handleUpdate}
