@@ -48,7 +48,7 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
   };
 
   return (
-    <div className="w-1/4 p-4 ">
+    <div className="flex flex-col w-full md:w-1/4 p-4">
       <h3 className="text-lg font-bold mb-4">
         Events on {selectedDate || "Select a day"}
       </h3>
@@ -72,7 +72,7 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
             >
               <strong>{event.name}</strong>: {event.startTime} - {event.endTime}
               <p className="pt-2 pb-4">{event.description}</p>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 md:flex-row flex-col md:space-x-4 space-y-2 md:space-y-0">
                 <Button
                   className="mt-2 px-2 py-1 bg-red-500 text-white rounded"
                   onClick={() => onDelete(index)}
@@ -132,7 +132,7 @@ const EventList = ({ selectedDate, events, onDelete, onUpdate }) => {
               setEditDetails({ ...editDetails, description: e.target.value })
             }
           />
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 md:flex-row flex-col md:space-x-4 space-y-2 md:space-y-0">
             <Button
               className="px-4 py-2 bg-green-500 text-white rounded"
               onClick={handleUpdate}

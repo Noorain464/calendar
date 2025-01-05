@@ -6,7 +6,7 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
   const today = new Date();
 
   return (
-    <div className="grid grid-cols-7 gap-2 p-4 bg-white shadow-md rounded-lg">
+    <div className="grid grid-cols-7 gap-2 p-4 bg-white shadow-md rounded-lg md:grid-cols-7 sm:grid-cols-3 xs:grid-cols-1">
       {daysOfWeek.map((day) => (
         <div
           key={day}
@@ -53,3 +53,4 @@ const CalendarGrid = ({ days, blankDays, currentDate, selectedDate, onDayClick }
 };
 
 export default CalendarGrid;
+
